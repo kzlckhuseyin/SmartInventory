@@ -1,15 +1,24 @@
 services:
-    database:
-        image: postgres:16-alpine
-        container_name: smart-inventory-postgres
-        environment:
-            POSTGRES_DB: SmartInventoryDb
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: mypassword
-        ports:
-            - "5432:5432"
-        volumes:
-            - postgres_data:/var/lib/postgresql/data
+  database:
+    image: postgres:16-alpine
+    container_name: smart-inventory-postgres
+    environment:
+      POSTGRES_DB: SmartInventoryDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: smart-inventory-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
 
 volumes:
-    postgres_data:
+  postgres_data:
+  ollama_data:
