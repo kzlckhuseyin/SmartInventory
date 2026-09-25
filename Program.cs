@@ -20,6 +20,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDatasheetService, DatasheetService>();
+builder.Services.AddHttpClient<IDatasheetProcessingService, DatasheetProcessingService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:11434");
+    client.Timeout = TimeSpan.FromMinutes(10); // LLM yanıtları için süreyi 5 dakikaya çıkardık
+});
+
 
 
 // Add services to the container.

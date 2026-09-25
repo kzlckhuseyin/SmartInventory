@@ -5,11 +5,13 @@ public class DatasheetService : IDatasheetService
 {
     private readonly AppDbContext _context;
     private readonly IBackgroundJobClient _backgroundJobClient;
+    private readonly IDatasheetProcessingService _processingService;
 
-    public DatasheetService(AppDbContext context, IBackgroundJobClient backgroundJobClient)
+    public DatasheetService(AppDbContext context, IBackgroundJobClient backgroundJobClient, IDatasheetProcessingService datasheetProcessingService)
     {
         _context = context;
         _backgroundJobClient = backgroundJobClient;
+        _processingService = datasheetProcessingService;
     }
 
     // Hangfire Arka Plan İşçisinin Çağıracağı Metod
@@ -30,6 +32,8 @@ public class DatasheetService : IDatasheetService
             // TODO (Bir sonraki adım)
             // 1. PdfPig ile metin ayıklama
             // 2. Ollama (Qwen/Llama) API çağrısı
+            // AI İşleme Servisini Çağır
+            await _processingService.ProcessPdfAndExtractDataAsync(datasheetId);
             // 3. JSON verisini Part olarak IsApproved = false kaydetme
 
             // Geçici olarak tamamlandı işaretleyelim

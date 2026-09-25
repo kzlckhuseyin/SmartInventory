@@ -11,6 +11,7 @@ public class DatasheetsController : ControllerBase
     }
 
     [HttpPost("upload")]
+    [Consumes("multipart/form-data")]
     public async Task<IActionResult> Upload([FromForm] DatasheetUploadDto dto)
     {
         var datasheetId = await _datasheetService.UploadAndQueueAsync(dto.File);
